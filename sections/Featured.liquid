@@ -1,109 +1,105 @@
 <div class="page-width">
     {% if section.settings.title != blank %}
-      <div class="section-header text-center">
+    <div class="section-header text-center">
         <h2>{{ section.settings.title | escape }}</h2>
-      </div>
+    </div>
     {% endif %}
-  
+
     {%- assign collection = collections[section.settings.collection] -%}
-  
+
     {% case section.settings.grid %}
-      {% when 2 %}
-        {%- assign max_height = 530 -%}
-        {%- assign grid_item_width = 'medium-up--one-half' -%}
+    {% when 2 %}
+    {%- assign max_height = 530 -%}
+    {%- assign grid_item_width = 'medium-up--one-half' -%}
     {% when 4 %}
-        {%- assign max_height = 250 -%}
-        {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+    {%- assign max_height = 250 -%}
+    {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
     {% endcase %}
-  
+
     {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
-  
+
     <ul class="grid grid--uniform grid--view-items">
-      {% for product in collection.products limit: product_limit %}
+        {% for product in collection.products limit: product_limit %}
         <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
-          {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor %}
+            {% include 'product-card-grid', max_height: max_height, product: product, show_vendor:
+            section.settings.show_vendor %}
         </li>
-      {% else %}
-  
+        {% else %}
+
         {% for i in (1..product_limit) %}
-          <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
-              
+        <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+
             <div class="grid-view-item product-card">
-              <a class="grid-view-item__link grid-view-item__image-container full-width-link" href="#">
-                <span class="visually-hidden">{{ 'homepage.onboarding.product_title' | t }}</span>
-              </a>
-              <div class="grid-view-item__image-wrapper">
-                {% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
-                {{ 'product-' | append: current   }}
+                <a class="grid-view-item__link grid-view-item__image-container full-width-link" href="#">
+                    <span class="visually-hidden">{{ 'homepage.onboarding.product_title' | t }}</span>
+                </a>
+                <div class="grid-view-item__image-wrapper">
+                    {% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
+                    {{ 'product-' | append: current }}
                 </div>
-              <div class="h4 grid-view-item__title" aria-hidden="true">{{ 'homepage.onboarding.product_title' | t }}</div>
-              {% include 'product-price' %}
-              <form method="post" action="/cart/add">
-                <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
-                <input min="1" type="number" id="quantity" name="quantity" value="1"/>
-                <input type="submit" value="Add to cart" class="btn" />
-              </form>
-             
-              
+                <div class="h4 grid-view-item__title" aria-hidden="true">{{ 'homepage.onboarding.product_title' | t }}
+                </div>
+                {% include 'product-price' %}
             </div>
-          </li>
+        </li>
         {% endfor %}
-      {% endfor %}
+        {% endfor %}
     </ul>
-  
+
     {% if section.settings.show_view_all %}
-      <hr class="hr--invisible" aria-hidden="true" />
-      <div class="text-center">
-        <a href="{{ collection.url }}" class="btn" aria-label="{{ 'collections.general.view_all_label' | t: collection_name: collection.title }}">
-          {{ 'collections.general.view_all' | t }}
+    <hr class="hr--invisible" aria-hidden="true" />
+    <div class="text-center">
+        <a href="{{ collection.url }}" class="btn"
+            aria-label="{{ 'collections.general.view_all_label' | t: collection_name: collection.title }}">
+            {{ 'collections.general.view_all' | t }}
         </a>
-      </div>
+    </div>
     {% endif %}
-  
-  
-  </div>
+
+
+</div>
 
 {% schema %}
 {
-    "name": "Featured Products",
-    "class": "index-section",
-    "settings": [
-    {
-    "type": "text",
-    "id": "title",
-    "label": "Heading",
-    "default": "Featured Products"
-    },
-    {
-    "type": "collection",
-    "id": "collection",
-    "label": "Collection"
-    },
-    {
-    "type": "range",
-    "id": "grid",
-    "label": "Products per row",
-    "min": 2,
-    "max": 4,
-    "step": 1,
-    "default": 2
-    },
-    {
-    "type": "range",
-    "id": "rows",
-    "label": "Rows",
-    "min": 1,
-    "max": 1,
-    "default": 1
-    }
-    ],
-    "presets" : [
-    {
-    "name": "Featured-Products",
-    "category": "New Collection"
-    }
+"name": "Featured Products",
+"class": "index-section",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Featured Products"
+},
+{
+"type": "collection",
+"id": "collection",
+"label": "Collection"
+},
+{
+"type": "range",
+"id": "grid",
+"label": "Products per row",
+"min": 2,
+"max": 4,
+"step": 1,
+"default": 2
+},
+{
+"type": "range",
+"id": "rows",
+"label": "Rows",
+"min": 1,
+"max": 1,
+"default": 1
+}
+],
+"presets" : [
+{
+"name": "Featured-Products",
+"category": "New Collection"
+}
 
-]   
+]
 }
 {% endschema %}
 

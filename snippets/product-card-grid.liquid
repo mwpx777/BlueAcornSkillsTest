@@ -48,7 +48,13 @@
 
 </div>
 <form method="post" action="/cart/add">
-  <!-- <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+ 
+ <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+  <!-- <h1  >{{ product.variants.first.id }}</h1> -->
   <input min="1" type="number" id="quantity" name="quantity" value="1"/>
-  <input type="submit" value="Add to cart" class="btn" />
-</form> -->
+    <div class="button-fold">
+  <input type="submit" value="Add to cart" data-type="value={{ product.variants.first.id }}" class="btn"  id="btn--add" onclick="addCart({{ product.variants.first.id }})"/>
+  
+ 
+</div>
+</form>
