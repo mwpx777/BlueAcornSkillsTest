@@ -1,90 +1,109 @@
-<div id="text-box">
-    <div class="container">
-      <h3> {{ section.settings.text-box }} </h3>
-
-      <section class="featured-collection">
-        {% if section.settings.title != blank %}
-          <h2 class="featured-collection__title">{{ section.settings.title | escape }}</h2>
-        {% endif %}
-      
-        {%- assign collection = collections[section.settings.collection] -%}
-      
-        {% for product in collection.products limit: 6 %}
-          <a href="{{ product.url | within: collection }}" class="featured-collection-item">
-            {% if product.featured_image != blank %}
-              <div class="featured-collection__image">
-                {% include 'responsive-image' with
-                  image: product.featured_image,
-                  max_width: 480,
-                  max_height: 480
-                %}
-              </div>
-            {% endif %}
-      
-            <p>{{ product.title | escape }}</p>
-            <span>
-              {% if product.compare_at_price > product.price %}
-                {% if product.price_varies %}
-                  {%- assign sale_price = product.price | money -%}
-                  {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
-                {% else %}
-                  {{ 'products.product.on_sale' | t }}
-                  {{ product.price | money }}
-                {% endif %}
-              {% else %}
-                {% if product.price_varies %}
-                  {%- assign price = product.price | money -%}
-                  {{ 'products.product.from_text_html' | t: price: price }}
-                {% else %}
-                  {{ product.price | money }}
-                {% endif %}
-              {% endif %}
-            </span>
-          </a>
-        {% else %}
-          {% for i in (1..6) %}
-            <a href="#" class="featured-collection-item">
-              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
-      
-              <p>{{ 'homepage.onboarding.product_title' | t }}</p>
-              <p>{{ 2000 | money }}</p>
-            </a>
-          {% endfor %}
+<div class="page-width">
+    {% if section.settings.title != blank %}
+      <div class="section-header text-center">
+        <h2>{{ section.settings.title | escape }}</h2>
+      </div>
+    {% endif %}
+  
+    {%- assign collection = collections[section.settings.collection] -%}
+  
+    {% case section.settings.grid %}
+      {% when 2 %}
+        {%- assign max_height = 530 -%}
+        {%- assign grid_item_width = 'medium-up--one-half' -%}
+    {% when 4 %}
+        {%- assign max_height = 250 -%}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+    {% endcase %}
+  
+    {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
+  
+    <ul class="grid grid--uniform grid--view-items">
+      {% for product in collection.products limit: product_limit %}
+        <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+          {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor %}
+        </li>
+      {% else %}
+  
+        {% for i in (1..product_limit) %}
+          <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+              
+            <div class="grid-view-item product-card">
+              <a class="grid-view-item__link grid-view-item__image-container full-width-link" href="#">
+                <span class="visually-hidden">{{ 'homepage.onboarding.product_title' | t }}</span>
+              </a>
+              <div class="grid-view-item__image-wrapper">
+                {% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
+                {{ 'product-' | append: current   }}
+                </div>
+              <div class="h4 grid-view-item__title" aria-hidden="true">{{ 'homepage.onboarding.product_title' | t }}</div>
+              {% include 'product-price' %}
+              <form method="post" action="/cart/add">
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                <input min="1" type="number" id="quantity" name="quantity" value="1"/>
+                <input type="submit" value="Add to cart" class="btn" />
+              </form>
+             
+              
+            </div>
+          </li>
         {% endfor %}
-      </section>
-      
-      
-     
-    </div>
+      {% endfor %}
+    </ul>
+  
+    {% if section.settings.show_view_all %}
+      <hr class="hr--invisible" aria-hidden="true" />
+      <div class="text-center">
+        <a href="{{ collection.url }}" class="btn" aria-label="{{ 'collections.general.view_all_label' | t: collection_name: collection.title }}">
+          {{ 'collections.general.view_all' | t }}
+        </a>
+      </div>
+    {% endif %}
+  
+  
   </div>
 
 {% schema %}
 {
-  "name": "Featured Products",
-  "settings": [
-    
-        {
-            "type": "text",
-            "id": "text-box",
-            "label": "Heading",
-            "default": "Title"
-         },
-         {
-            "type": "collection",
-            "id": "feature_product",
-            "label": "Featured product"
-         }
- 
-  ],
-  "presets" : [
-  {
-      "name": "Featured-Products1",
-      "category": "Call to Action"
-     
+    "name": "Featured Products",
+    "class": "index-section",
+    "settings": [
+    {
+    "type": "text",
+    "id": "title",
+    "label": "Heading",
+    "default": "Featured Products"
+    },
+    {
+    "type": "collection",
+    "id": "collection",
+    "label": "Collection"
+    },
+    {
+    "type": "range",
+    "id": "grid",
+    "label": "Products per row",
+    "min": 2,
+    "max": 4,
+    "step": 1,
+    "default": 2
+    },
+    {
+    "type": "range",
+    "id": "rows",
+    "label": "Rows",
+    "min": 1,
+    "max": 1,
+    "default": 1
+    }
+    ],
+    "presets" : [
+    {
+    "name": "Featured-Products",
+    "category": "New Collection"
+    }
 
-  }
-  ]
+]   
 }
 {% endschema %}
 
