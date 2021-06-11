@@ -29,7 +29,7 @@ https://blueacornskillstest.myshopify.com/?_bt=eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBa
 Password: "towsta"
 
 ## **Screenshot**
-![screenshot](screenshot.png)
+![screenshot](screenshot.PNG)
 
 
 
