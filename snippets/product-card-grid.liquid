@@ -47,14 +47,15 @@
   {% include 'product-price-listing', product: product, show_vendor: show_vendor %}
 
 </div>
-<form method="post" action="/cart/add">
+<form method="post" action="/cart/add" id="form">
  
  <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
   <!-- <h1  >{{ product.variants.first.id }}</h1> -->
-  <input min="1" type="number" id="quantity" name="quantity" value="1"/>
-    <div class="button-fold">
-  <input type="submit" value="Add to cart" data-type="value={{ product.variants.first.id }}" class="btn"  id="btn--add" onclick="addCart({{ product.variants.first.id }})"/>
-  
- 
-</div>
+  <!-- <input min="1" type="number" id="quantity" name="quantity" value="1"/> -->
+    <!-- <div class="button-fold"> -->
+  <!-- <input type="submit" value="Add to cart" data-type="value={{ product.variants.first.id }}" class="btn"  id="btn--add" onclick="addCart({{ product.variants.first.id }})"/>
+  <input type="submit" value="Add to cart" data-type="value={{ product.variants.first.id }}" class="btn"  id="btn--new" onclick="addCart({{ product.variants.first.id }})"/> -->
+<div class="fold" type="submit"  data-type="value={{ product.variants.first.id }}" class="btn"  id="btn--new" onclick="addCart({{ product.variants.first.id }})"><b>ADD TO CART</b></div>
+
+<!-- </div>  -->
 </form>

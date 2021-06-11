@@ -6997,53 +6997,105 @@ hr {
 .store-availability-list__phone {
   margin-bottom: 0; }
 
-    #btn--add {
-    
-   
-    background-color:RED ;
-    
-    
-  } 
 
 
-    #btn--add:hover{
-  
-    background-color:white ;
-    border: 3px solid red;
-    
-    color:  red;
-  }   
 
-  /* .button-fold {
-  width: 100%;
-    background-color: red;
-    color: red;
-   
-    text-align: center;
-  
+
+/* .fold {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top: 1rem;
     position: relative;
-    overflow: hidden
-} */
-
-/* .button-fold:before { 
+    width: 80%;
+    padding: .5rem;
+    background: rgb(255, 0, 0);
+    cursor: pointer;
+    color: white;
+}
+  .fold:before{
     content: "";
-    display: block;
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
-    border-width: 0 10px 10px 0;
     border-style: solid;
-    border-color: rgb(196, 49, 49) #FFF;
-    -webkit-border-bottom-left-radius: 8px;
-    -moz-border-bottom-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    -webkit-box-shadow: 0 0 5px #555;
-    -moz-box-shadow: 0 0 5px #555;
-    box-shadow: 0 0 5px #555;
-    -webkit-transition: all .5s ease-in-out;
-    -moz-transition: all .5s ease-in-out;
-    transition: all .5s ease-in-out
+    border-width: 10px 10px  0 0;
+    border-color: rgb(85, 2, 2) white;
+} 
+
+ .fold:hover {
+    position: relative;
+    width: 80%;
+    padding: .5rem;
+    background:white;
+    border: .2rem red solid;
+    color: red;
+    transition: 0.3s;
+    
+} 
+
+#btn--new:hover::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-style: solid;
+    border-width: 10px 10px 0 0;
+    border-color: rgb(85, 2, 2) white;
+}
+#btn--new:hover:before{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 0;
+  border-color:  white;
 } */
 
+.fold {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  border-radius: .2rem;
+  clip-path: polygon(1rem 0, 100% 0, 100% 100%, 0% 100%, 0% 1rem);
+  background: red;
+  padding: .5rem;
+  width: 80%;
+  font-size: .7rem;
+  color: white;
+  transition: clip-path 500ms;
+}
 
-/* .button-fold:hover:before { border-width: 0 80px 80px 0 }  */
+.fold:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background:red;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3); 
+  border-radius: 0 0 .1rem 0;
+  transition: transform 800ms;
+}
+
+.fold:hover {
+  clip-path: polygon(0px 0px, 100% 0px, 100% 100%, 0% 100%, 0% 0px);
+  background: white;
+  border: .3rem solid red;
+  color:red;
+}
+
+.fold:hover:after {
+  transform: translate(-100%, -100%);
+}
+
+
+#quantity {
+  display: flex;
+  flex-direction: flex-start;
+}

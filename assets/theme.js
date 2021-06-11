@@ -9698,11 +9698,9 @@ async function addCart(variantId) {
       },
       body: JSON.stringify({
           id: variantId,
+          quantity: 1
           
       })
   })
-  alert("Product#  " + variantId + " added to your cart!")
+  alert("Product successfully added to your cart!")
 }
-
-// Example
-// const lineItem = await addItem(123456, 1);

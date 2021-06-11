@@ -1,0 +1,9 @@
+#btn--add {
+	background-color: RED;
+	&:hover {
+		background-color: white;
+		border: 3px solid red;
+		color: red;
+		transition: 0.3s;
+	}
+}
