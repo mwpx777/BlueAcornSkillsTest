@@ -9703,4 +9703,5 @@ async function addCart(variantId) {
       })
   })
   alert("Product successfully added to your cart!")
+  console.log("Product #" + variantId + " was successfully added to your cart!")
 }

@@ -1,9 +1,41 @@
-#btn--add {
-	background-color: RED;
-	&:hover {
-		background-color: white;
-		border: 3px solid red;
-		color: red;
-		transition: 0.3s;
+.fold {
+	position: relative;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 1rem;
+	border-radius: .2rem;
+	clip-path: polygon(1rem 0, 100% 0, 100% 100%, 0% 100%, 0% 1rem);
+	background: red;
+	padding: .5rem;
+	width: 80%;
+	font-size: .7rem;
+	color: white;
+	transition: clip-path 500ms;
+	&:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 20px;
+		height: 20px;
+		background: red;
+		box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+		border-radius: 0 0 .1rem 0;
+		transition: transform 800ms;
 	}
-}   
+	&:hover {
+		clip-path: polygon(0px 0px, 100% 0px, 100% 100%, 0% 100%, 0% 0px);
+		background: white;
+		border: .3rem solid red;
+		color: red;
+		&:after {
+			transform: translate(-100%, -100%);
+		}
+	}
+}
+#quantity {
+	display: flex;
+	flex-direction: flex-start;
+}
